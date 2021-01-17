@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    var Category = sequelize.define('t_category', {
+    let Category = sequelize.define('t_category', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -13,10 +13,12 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         underscored: true,
         timestamps: false,
-        createAt: false,
+        createAt: true,
         paranoid: true,
         freezeTableName: true
     });
+
+    // sequelize.sync()
 
     return Category
 }

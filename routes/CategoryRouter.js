@@ -1,16 +1,19 @@
 /**
  * Module dependencies.
  */
-var express = require('express');
-var router = express.Router();
-var CategoryController = require('../controller/CategoryController');
+var express = require('express')
+var router = express.Router()
+var CategoryController = require('../controller').CategoryController
 
-router.post('/categorylist', CategoryController.getCategoryList);
+router.post('/save', CategoryController.save)
 
-router.post('/insertcategory', CategoryController.insertCategory);
+router.put('/update', CategoryController.update)
 
-router.post('/updatecategory', CategoryController.updateCategory);
+router.delete('/:id', CategoryController.delete)
 
-router.post('/deletecategory', CategoryController.deleteCategory);
+router.post('/', CategoryController.all)
 
-module.exports = router;
+router.get('/:id', CategoryController.get)
+
+
+module.exports = router

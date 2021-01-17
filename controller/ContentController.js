@@ -1,17 +1,30 @@
-var ContentService = require('../service').ContentService
-var Response = require("../common/Response")
+let ContentService = require('../service').ContentService;
 
-exports.getContentList = (req, res) => {
-    var data = req.body
+exports.save = (req, res) => {
+    let data = req.body;
+    ContentService.save(req, res, data)
+};
 
-    console.log("HELLO")
+exports.update = (req, res) => {
+    let data = req.body;
+    ContentService.update(req, res, data)
+};
 
+exports.delete = (req, res) => {
+    ContentService.delete(req, res)
+};
+
+exports.list = (req, res) => {
+    let data = req.body;
     adjustRequest(data);
 
-    res.json(data)
-
-    // ContentService.getContentList(req, res, data)
+    ContentService.list(req, res, data)
 };
+
+exports.get = (req, res) => {
+    ContentService.get(req, res)
+};
+
 
 function adjustRequest(data) {
     // TODO: Fix here, cognitive complexity :(
@@ -44,25 +57,3 @@ function adjustRequest(data) {
         data.sortBy = "DESC"
     }
 }
-
-exports.insertContent = (req, res) => {
-    var data = req.body
-
-    ContentService.insertContent(req, res, data)
-};
-
-exports.updateContent = (req, res) => {
-    var data = req.body
-
-    ContentService.updateContent(req, res, data)
-};
-
-exports.deleteContent = (req, res) => {
-    var data = req.body
-
-    ContentService.deleteContent(req, res, data)
-};
-
-exports.getContentDetail = (req, res) => {
-    ContentService.getContentDetail(req, res)
-};

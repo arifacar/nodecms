@@ -1,9 +1,9 @@
-var db = require("../common/db.manager")
-var config = require('../config/config');
-var Response = require("../common/Response")
+let db = require("../common/db.manager");
+let config = require('../config/config');
+let Response = require("../common/Response");
 const {Op} = require("sequelize");
 
-exports.getContentList = async (req, res, data) => {
+exports.list = async (req, res, data) => {
     try {
         let offset = Number(data.page - 1) * config.PAGE_ITEM
 
@@ -31,7 +31,7 @@ exports.getContentList = async (req, res, data) => {
     }
 }
 
-exports.insertContent = async (req, res, data) => {
+exports.save = async (req, res, data) => {
     try {
         const insertedContent = await db.Content.create(data);
         res.json(Response.setSuccessMessages(insertedContent))
@@ -40,7 +40,7 @@ exports.insertContent = async (req, res, data) => {
     }
 }
 
-exports.updateContent = async (req, res, data) => {
+exports.update = async (req, res, data) => {
     try {
         const updatedContent = await db.Content.update(data, {where: {id: data.id}});
         res.json(Response.setSuccessMessages(updatedContent))
@@ -49,11 +49,11 @@ exports.updateContent = async (req, res, data) => {
     }
 }
 
-exports.deleteContent = (req, res, data) => {
+exports.delete = (req, res) => {
     try {
         const deleteResponse = db.Content.destroy({
             where: {
-                id: data.id
+                id: req.params.id
             }
         });
 
@@ -63,7 +63,7 @@ exports.deleteContent = (req, res, data) => {
     }
 }
 
-exports.getContentDetail = async (req, res) => {
+exports.get = async (req, res) => {
     try {
         const content = await db.Content.findOne({
             where: {

@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    var Content = sequelize.define('t_content', {
+    let Content = sequelize.define('t_content', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -21,9 +21,12 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         underscored: true,
         timestamps: false,
-        createAt: false,
+        createAt: true,
         paranoid: true,
         freezeTableName: true,
     });
+
+    // sequelize.sync()
+
     return Content
 }

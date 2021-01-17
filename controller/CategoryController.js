@@ -1,13 +1,29 @@
-var CategoryService = require('../service').CategoryService
-var config = require('../config/config');
-var async = require('async');
+let CategoryService = require('../service').CategoryService;
 
-exports.getCategoryList = (req, res, next) => {
-    var data = req.body
+exports.save = (req, res) => {
+    let data = req.body;
+    CategoryService.save(req, res, data)
+};
+
+exports.update = (req, res) => {
+    let data = req.body;
+    CategoryService.update(req, res, data)
+};
+
+exports.delete = (req, res) => {
+    CategoryService.delete(req, res)
+};
+
+exports.all = (req, res) => {
+    let data = req.body;
 
     adjustRequest(data);
 
-    CategoryService.getCategoryList(req, res, data)
+    CategoryService.all(req, res, data)
+};
+
+exports.get = (req, res) => {
+    CategoryService.get(req, res)
 };
 
 function adjustRequest(data) {
@@ -23,21 +39,3 @@ function adjustRequest(data) {
         data.sortBy = "DESC"
     }
 }
-
-exports.insertCategory = (req, res) => {
-    var data = req.body
-
-    CategoryService.insertCategory(req, res, data)
-};
-
-exports.updateCategory = (req, res) => {
-    var data = req.body
-
-    CategoryService.updateCategory(req, res, data)
-};
-
-exports.deleteCategory = (req, res) => {
-    var data = req.body
-
-    CategoryService.deleteCategory(req, res, data)
-};

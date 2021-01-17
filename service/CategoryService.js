@@ -1,8 +1,40 @@
-var db = require("../common/db.manager")
-var config = require('../config/config');
-var Response = require("../common/Response")
+let db = require("../common/db.manager")
+let config = require('../config/config')
+let Response = require("../common/Response")
 
-exports.getCategoryList = async (req, res, data) => {
+exports.save = async (req, res, data) => {
+    try {
+        const insertedCategory = await db.Category.create(data);
+        res.json(Response.setSuccessMessages(insertedCategory))
+    } catch (err) {
+        res.json(Response.setErrorMessages(err))
+    }
+}
+
+exports.update = async (req, res, data) => {
+    try {
+        const updatedCategory = await db.Category.update(data, {where: {id: data.id}});
+        res.json(Response.setSuccessMessages(updatedCategory))
+    } catch (err) {
+        res.json(Response.setErrorMessages(err))
+    }
+}
+
+exports.delete = async (req, res) => {
+    try {
+        const deletedCategory = await db.Category.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+        res.json(Response.setSuccessMessages(deletedCategory))
+    } catch (err) {
+        res.json(Response.setErrorMessages(err))
+    }
+}
+
+
+exports.all = async (req, res, data) => {
     try {
         let offset = Number(data.page - 1) * config.PAGE_ITEM
         const categoryList = await db.Category.findAndCountAll({
@@ -18,33 +50,18 @@ exports.getCategoryList = async (req, res, data) => {
     }
 }
 
-exports.insertCategory = async (req, res, data) => {
+exports.get = async (req, res) => {
     try {
-        const insertedCategory = await db.Category.create(data);
-        res.json(Response.setSuccessMessages(insertedCategory))
-    } catch (err) {
-        res.json(Response.setErrorMessages(err))
-    }
-}
-
-exports.updateCategory = async (req, res, data) => {
-    try {
-        const updatedCategory = await db.Category.update(data, {where: {id: data.id}});
-        res.json(Response.setSuccessMessages(updatedCategory))
-    } catch (err) {
-        res.json(Response.setErrorMessages(err))
-    }
-}
-
-exports.deleteCategory = async (req, res, data) => {
-    try {
-        const deletedCategory = await db.Category.destroy({
+        const category = await db.Category.findOne({
             where: {
-                id: data.id
-            }
+                id: req.params.id
+            },
+            nested: true,
         });
-        res.json(Response.setSuccessMessages(deletedCategory))
+
+        res.json(Response.setSuccessMessages(category))
     } catch (err) {
         res.json(Response.setErrorMessages(err))
     }
+
 }

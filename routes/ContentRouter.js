@@ -1,17 +1,20 @@
+/**
+ * Module dependencies.
+ */
 var express = require('express')
 var router = express.Router()
-var ContentController = require('../controller/ContentController')
+var ContentController = require('../controller').ContentController
 
-router.post('list', ContentController.getContentList)
+router.post('/save', ContentController.save)
 
-router.post('insertcontent', ContentController.insertContent)
+router.put('/update', ContentController.update)
 
-router.post('updatecontent', ContentController.updateContent)
+router.delete('/:id', ContentController.delete)
 
-router.post('/deletecontent', ContentController.deleteContent)
+router.post('/', ContentController.list)
 
-router.post('/searchcontent', ContentController.getContentList)
+router.get('/:id', ContentController.get)
 
-router.get('/contentdetail/:id', ContentController.getContentDetail)
+router.post('/search', ContentController.list)
 
 module.exports = router;
